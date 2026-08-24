@@ -4,7 +4,6 @@ My DSA practice and coding solutions.
 
 ## Platforms
 - LeetCode
-- GeeksforGeeks
 
 ## Languages
 - Java
