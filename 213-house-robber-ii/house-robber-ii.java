@@ -1,24 +1,38 @@
 class Solution {
     public int rob(int[] nums) {
-        if(nums ==null || nums.length==0) return 0;
-        if(nums.length ==1) return nums[0];
-
-        return Math.max(
-           range(nums,0,nums.length-2),
-           range(nums,1,nums.length-1)
-        );
+        int n = nums.length;
+        if (n == 1) return nums[0];
+        
+        
+        Integer[] memo1 = new Integer[n];
+        Integer[] memo2 = new Integer[n];
+        
+        
+        int case1 = solve(nums, n - 2, 0, memo1);
+        
+        int case2 = solve(nums, n - 1, 1, memo2);
+        
+        return Math.max(case1, case2);
     }
-
-    private int range(int[] nums,int s,int e){
-        int prev1=0;
-        int prev2=0;
-
-        for(int i=s;i<=e;i++){
-           int curr=Math.max(prev1,prev2+nums[i]);
-
-           prev2=prev1;
-           prev1=curr;
+    
+    private int solve(int[] nums, int curr, int startLimit, Integer[] memo) {
+       
+        if (curr < startLimit) {
+            return 0;
         }
-        return prev1;
+        
+       
+        if (memo[curr] != null) {
+            return memo[curr];
+        }
+        
+        
+        int robCurrent = nums[curr] + solve(nums, curr - 2, startLimit, memo);
+        
+       
+        int skipCurrent = solve(nums, curr - 1, startLimit, memo);
+        
+        
+        return memo[curr] = Math.max(robCurrent, skipCurrent);
     }
 }
